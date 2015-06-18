@@ -28,6 +28,9 @@ func TestExample(t *testing.T) {
 	err := someError()
 	assert.Nil(t, err)
 
+	err = noErr()
+	assert.Nil(t, err)
+
 	// Must* functions will call FailNow. (Fatal equivalent)
 	assert.MustBeEqual(t, "nicht", "gleich")
 
@@ -37,4 +40,8 @@ func TestExample(t *testing.T) {
 
 func someError() error {
 	return fmt.Errorf("Hallo Welt")
+}
+
+func noErr() error {
+	return nil
 }

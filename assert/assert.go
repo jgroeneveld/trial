@@ -14,20 +14,43 @@ const (
 
 func Equal(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
 	if expected != actual {
-		comparisonError(t, "Not Equal", 1, expected, actual, args...)
+		comparisonError(t, "Not equal", 1, expected, actual, args...)
 	}
 }
 
 func MustBeEqual(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
 	if expected != actual {
-		comparisonError(t, "Not Equal", 1, expected, actual, args...)
+		comparisonError(t, "Not equal", 1, expected, actual, args...)
+		t.FailNow()
+	}
+}
+
+func NotEqual(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
+	if expected == actual {
+		msg := "Is equal"
+		msg += fmt.Sprintf("\n%s: %#v", msgActual, actual)
+		if len(args) > 0 {
+			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
+		}
+		th.Error(t, msg, 1)
+	}
+}
+
+func MustNotBeEqual(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
+	if expected == actual {
+		msg := "Is equal"
+		msg += fmt.Sprintf("\n%s: %#v", msgActual, actual)
+		if len(args) > 0 {
+			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
+		}
+		th.Error(t, msg, 1)
 		t.FailNow()
 	}
 }
 
 func True(t TBInt, expression bool, args ...interface{}) {
 	if !expression {
-		msg := "Not True"
+		msg := "Not true"
 		if len(args) > 0 {
 			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
 		}
@@ -37,7 +60,7 @@ func True(t TBInt, expression bool, args ...interface{}) {
 
 func MustBeTrue(t TBInt, expression bool, args ...interface{}) {
 	if !expression {
-		msg := "Not True"
+		msg := "Not true"
 		if len(args) > 0 {
 			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
 		}
@@ -48,7 +71,7 @@ func MustBeTrue(t TBInt, expression bool, args ...interface{}) {
 
 func False(t TBInt, expression bool, args ...interface{}) {
 	if !expression {
-		msg := "Not False"
+		msg := "Not false"
 		if len(args) > 0 {
 			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
 		}
@@ -58,7 +81,7 @@ func False(t TBInt, expression bool, args ...interface{}) {
 
 func MustBeFalse(t TBInt, expression bool, args ...interface{}) {
 	if !expression {
-		msg := "Not False"
+		msg := "Not false"
 		if len(args) > 0 {
 			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
 		}
@@ -82,6 +105,27 @@ func MustBeNil(t TBInt, expression interface{}, args ...interface{}) {
 	if expression != nil {
 		msg := "Not nil"
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, expression)
+		if len(args) > 0 {
+			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
+		}
+		th.Error(t, msg, 1)
+		t.FailNow()
+	}
+}
+
+func NotNil(t TBInt, expression interface{}, args ...interface{}) {
+	if expression == nil {
+		msg := "Is nil"
+		if len(args) > 0 {
+			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
+		}
+		th.Error(t, msg, 1)
+	}
+}
+
+func MustNotBeNil(t TBInt, expression interface{}, args ...interface{}) {
+	if expression == nil {
+		msg := "Is nil"
 		if len(args) > 0 {
 			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
 		}
