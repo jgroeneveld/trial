@@ -9,14 +9,15 @@ import (
 func TestEqual(t *testing.T) {
 	mt := &mockT{}
 
-	Equal(mt, 1, "1")
+	Equal(mt, 1, int64(1), "Test (%s)", "value")
 
 	actual := mt.errors[0]
 
 	expected := "\r" + `assert/assert_test.go:12: Not Equal:
 Expected: 1
-  Actual: "1"
-int != string`
+  Actual: 1
+   Types: Expected:int, Actual:int64
+ Context: Test (value)`
 
 	if expected != actual {
 		t.Errorf("wrong output:\nexpected:\n%q\nactual:\n%q", expected, actual)
