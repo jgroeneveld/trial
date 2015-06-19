@@ -69,13 +69,13 @@ func MustBeTrue(t testingT, expression bool, msgf ...interface{}) {
 }
 
 func False(t testingT, expression bool, msgf ...interface{}) {
-	if !expression {
+	if expression {
 		th.Error(t, 1, titleOrMsgf("Not false", msgf))
 	}
 }
 
 func MustBeFalse(t testingT, expression bool, msgf ...interface{}) {
-	if !expression {
+	if expression {
 		th.Error(t, 1, titleOrMsgf("Not false", msgf))
 		t.FailNow()
 	}
