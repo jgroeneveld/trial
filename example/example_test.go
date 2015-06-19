@@ -37,7 +37,6 @@ func TestExample(t *testing.T) {
 	assert.MustBeEqual(t, "nicht", "gleich")
 
 	assert.Equal(t, "never", "thesame - but should not be called")
-
 }
 
 func someError() error {

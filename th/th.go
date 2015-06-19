@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-func Error(t TBInt, skip int, msgs ...interface{}) {
+func Error(t testingT, skip int, msgs ...interface{}) {
 	_, file, line, ok := runtime.Caller(skip + 1)
 	if !ok {
 		panic("can not get runtime caller")
@@ -18,6 +18,6 @@ func Error(t TBInt, skip int, msgs ...interface{}) {
 	t.Error(args...)
 }
 
-type TBInt interface {
+type testingT interface {
 	Error(args ...interface{})
 }
