@@ -2,8 +2,8 @@ package example
 
 import (
 	"fmt"
-	"github.com/jgroeneveld/go-test/assert"
-	"github.com/jgroeneveld/go-test/th"
+	"github.com/jgroeneveld/trial/assert"
+	"github.com/jgroeneveld/trial/th"
 	"testing"
 )
 

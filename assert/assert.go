@@ -2,7 +2,7 @@ package assert
 
 import (
 	"fmt"
-	"github.com/jgroeneveld/go-test/th"
+	"github.com/jgroeneveld/trial/th"
 )
 
 const (
