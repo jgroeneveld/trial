@@ -3,6 +3,7 @@ package assert
 import (
 	"fmt"
 	"github.com/jgroeneveld/trial/th"
+	"reflect"
 )
 
 const (
@@ -37,6 +38,19 @@ func MustNotBeEqual(t testingT, expected interface{}, actual interface{}, msgf .
 		msg := titleOrMsgf("Is equal", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, actual)
 		th.Error(t, 1, msg)
+		t.FailNow()
+	}
+}
+
+func DeepEqual(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
+	if !reflect.DeepEqual(expected, actual) {
+		comparisonError(t, "Not deep equal", 1, expected, actual, msgf...)
+	}
+}
+
+func MustBeDeepEqual(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
+	if !reflect.DeepEqual(expected, actual) {
+		comparisonError(t, "Not deep equal", 1, expected, actual, msgf...)
 		t.FailNow()
 	}
 }
