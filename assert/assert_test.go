@@ -18,7 +18,7 @@ func TestEqual(t *testing.T) {
 	}
 
 	actual := mt.errors[0]
-	expected := "\r" + `assert/assert_test.go:13: Not equal:
+	expected := "\r" + `assert_test.go:13: Not equal:
 Expected: "a"
   Actual: "b"`
 
@@ -27,7 +27,7 @@ Expected: "a"
 	}
 
 	actual = mt.errors[1]
-	expected = "\r" + `assert/assert_test.go:14: Test (value):
+	expected = "\r" + `assert_test.go:14: Test (value):
 Expected: 1
   Actual: 1
    Types: Expected:int, Actual:int64`

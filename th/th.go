@@ -11,7 +11,7 @@ func Error(t testingT, skip int, msgs ...interface{}) {
 	if !ok {
 		panic("can not get runtime caller")
 	}
-	location := fmt.Sprintf("%s/%s:%d", path.Base(path.Dir(file)), path.Base(file), line)
+	location := fmt.Sprintf("%s:%d", path.Base(file), line)
 
 	args := []interface{}{fmt.Sprintf("\r%s:", location)}
 	args = append(args, msgs...)
