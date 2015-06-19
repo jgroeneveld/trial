@@ -6,136 +6,99 @@ import (
 )
 
 const (
-	msgContext  = " Context"
 	msgActual   = "  Actual"
 	msgExpected = "Expected"
 	msgTypes    = "   Types"
 )
 
-func Equal(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
+func Equal(t TBInt, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected != actual {
-		comparisonError(t, "Not equal", 1, expected, actual, args...)
+		comparisonError(t, "Not equal", 1, expected, actual, msgf...)
 	}
 }
 
-func MustBeEqual(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
+func MustBeEqual(t TBInt, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected != actual {
-		comparisonError(t, "Not equal", 1, expected, actual, args...)
+		comparisonError(t, "Not equal", 1, expected, actual, msgf...)
 		t.FailNow()
 	}
 }
 
-func NotEqual(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
+func NotEqual(t TBInt, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected == actual {
-		msg := "Is equal"
+		msg := titleOrMsgf("Is equal", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, actual)
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, msg)
 	}
 }
 
-func MustNotBeEqual(t TBInt, expected interface{}, actual interface{}, args ...interface{}) {
+func MustNotBeEqual(t TBInt, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected == actual {
-		msg := "Is equal"
+		msg := titleOrMsgf("Is equal", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, actual)
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, msg)
 		t.FailNow()
 	}
 }
 
-func True(t TBInt, expression bool, args ...interface{}) {
+func True(t TBInt, expression bool, msgf ...interface{}) {
 	if !expression {
-		msg := "Not true"
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, titleOrMsgf("Not true", msgf))
 	}
 }
 
-func MustBeTrue(t TBInt, expression bool, args ...interface{}) {
+func MustBeTrue(t TBInt, expression bool, msgf ...interface{}) {
 	if !expression {
-		msg := "Not true"
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, titleOrMsgf("Not true", msgf))
 		t.FailNow()
 	}
 }
 
-func False(t TBInt, expression bool, args ...interface{}) {
+func False(t TBInt, expression bool, msgf ...interface{}) {
 	if !expression {
-		msg := "Not false"
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, titleOrMsgf("Not false", msgf))
 	}
 }
 
-func MustBeFalse(t TBInt, expression bool, args ...interface{}) {
+func MustBeFalse(t TBInt, expression bool, msgf ...interface{}) {
 	if !expression {
-		msg := "Not false"
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, titleOrMsgf("Not false", msgf))
 		t.FailNow()
 	}
 }
 
-func Nil(t TBInt, expression interface{}, args ...interface{}) {
+func Nil(t TBInt, expression interface{}, msgf ...interface{}) {
 	if expression != nil {
-		msg := "Not nil"
+		msg := titleOrMsgf("Not nil", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, expression)
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, msg)
 	}
 }
 
-func MustBeNil(t TBInt, expression interface{}, args ...interface{}) {
+func MustBeNil(t TBInt, expression interface{}, msgf ...interface{}) {
 	if expression != nil {
-		msg := "Not nil"
+		msg := titleOrMsgf("Not nil", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, expression)
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, msg)
 		t.FailNow()
 	}
 }
 
-func NotNil(t TBInt, expression interface{}, args ...interface{}) {
+func NotNil(t TBInt, expression interface{}, msgf ...interface{}) {
 	if expression == nil {
-		msg := "Is nil"
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, titleOrMsgf("Is nil", msgf))
 	}
 }
 
-func MustNotBeNil(t TBInt, expression interface{}, args ...interface{}) {
+func MustNotBeNil(t TBInt, expression interface{}, msgf ...interface{}) {
 	if expression == nil {
-		msg := "Is nil"
-		if len(args) > 0 {
-			msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-		}
-		th.Error(t, msg, 1)
+		th.Error(t, 1, titleOrMsgf("Is nil", msgf))
 		t.FailNow()
 	}
 }
 
-func comparisonError(t TBInt, prefix string, skip int, expected interface{}, actual interface{}, args ...interface{}) {
-	msg := fmt.Sprintf("%s:\n%s: %#v\n%s: %#v", prefix, msgExpected, expected, msgActual, actual)
+func comparisonError(t TBInt, title string, skip int, expected interface{}, actual interface{}, msgf ...interface{}) {
+	msg := fmt.Sprintf("%s:\n%s: %#v\n%s: %#v", titleOrMsgf(title, msgf), msgExpected, expected, msgActual, actual)
 
 	expectedT := fmt.Sprintf("%T", expected)
 	actualT := fmt.Sprintf("%T", actual)
@@ -143,18 +106,17 @@ func comparisonError(t TBInt, prefix string, skip int, expected interface{}, act
 		msg += fmt.Sprintf("\n%s: Expected:%s, Actual:%s", msgTypes, expectedT, actualT)
 	}
 
-	if len(args) > 0 {
-		msg += fmt.Sprintf("\n%s: %s", msgContext, argsToString(args))
-	}
-
-	th.Error(t, msg, skip+1)
+	th.Error(t, skip+1, msg)
 }
 
-func argsToString(args []interface{}) string {
-	if len(args) == 0 {
-		return ""
+func titleOrMsgf(title string, msgf []interface{}) string {
+	if len(msgf) > 0 {
+		return msgfToString(msgf)
 	}
+	return title
+}
 
+func msgfToString(args []interface{}) string {
 	if len(args) == 1 {
 		return fmt.Sprintf("%s", args[0])
 	}

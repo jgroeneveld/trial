@@ -6,14 +6,16 @@ import (
 	"runtime"
 )
 
-func Error(t TBInt, msg interface{}, skip int) {
+func Error(t TBInt, skip int, msgs ...interface{}) {
 	_, file, line, ok := runtime.Caller(skip + 1)
 	if !ok {
 		panic("can not get runtime caller")
 	}
 	location := fmt.Sprintf("%s/%s:%d", path.Base(path.Dir(file)), path.Base(file), line)
 
-	t.Error(fmt.Sprintf("\r%s: %s", location, msg))
+	args := []interface{}{fmt.Sprintf("\r%s:", location)}
+	args = append(args, msgs...)
+	t.Error(args...)
 }
 
 type TBInt interface {

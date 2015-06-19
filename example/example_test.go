@@ -11,11 +11,13 @@ func TestExample(t *testing.T) {
 
 	if true {
 		// generic t.Error replacement that allows skipping
-		th.Error(t, "This will happen", 0)
+		th.Error(t, 0, "This will happen")
 	}
 
 	// simple equals
-	assert.Equal(t, 1, 2)
+	assert.Equal(t, 1, 2, "numbers dont match")
+
+	assert.NotEqual(t, 1, 1, "numbers match")
 
 	// if the types dont match, it will be printed
 	assert.Equal(t, 1, "1")
