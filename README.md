@@ -49,5 +49,5 @@ unit_test.go:42: Not equal:
 		   Types: Expected:int, Actual:int64
 ```
 
-See example/example_test.go for more.
+See [example/example_test.go](example/example_test.go) for more.
 
