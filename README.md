@@ -51,3 +51,23 @@ unit_test.go:42: Not equal:
 
 See [example/example_test.go](example/example_test.go) for more.
 
+## trial/th Usage
+`th` can be used to write simple own assertions. This for example gives you a wrapper for [schema](https://github.com/jgroeneveld/schema).MatchJSON to have simple JSON schema assertions in your tests:
+
+```go
+func AssertJSONSchema(t *testing.T, matcher schema.Matcher, r io.Reader) {
+	err := schema.MatchJSON(matcher, r)
+	if err != nil {
+		th.Error(t, 1, err.Error())
+	}
+}
+
+func MustMatchJSONSchema(t *testing.T, matcher schema.Matcher, r io.Reader) {
+	err := schema.MatchJSON(matcher, r)
+	if err != nil {
+		th.Error(t, 1, err.Error())
+		t.FailNow()
+	}
+}
+```
+
