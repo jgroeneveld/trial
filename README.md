@@ -1,6 +1,6 @@
 # Trial
 
-A simple assertion library for go.
+A simple assertion library for go. Also see [schema](https://github.com/jgroeneveld/schema) for easier JSON Schema testing.
 
 ## Motivation
 
@@ -10,7 +10,7 @@ test logs.
 
 Trial gives us `th.Error(t testingT, skip int, msgs ...interface{})` allowing to skip callers to implement helpers with nice logging.
 
-For most uses, the `trial/assert` package is enough, giving us the most basic assertions needed with nice error messages. Also see [schema](https://github.com/jgroeneveld/schema) for easier JSON Schema testing.
+For most uses, the `trial/assert` package is enough, giving us the most basic assertions needed with nice error messages.
 
 ## trial/assert Usage
 
