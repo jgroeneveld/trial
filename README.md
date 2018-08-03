@@ -2,6 +2,8 @@
 
 A simple assertion library for go. Also see [schema](https://github.com/jgroeneveld/schema) for easier JSON Schema testing.
 
+[godoc](https://godoc.org/github.com/jgroeneveld/trial/assert)
+
 ## Motivation
 
 go-test is fine. We do not need big testing frameworks for most projects. 

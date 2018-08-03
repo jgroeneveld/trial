@@ -1,3 +1,27 @@
+// trial/assert is a simple and lightweight assertion library.
+//
+// Example:
+//
+//  import "github.com/jgroeneveld/trial/assert"
+//
+//  assert.Equal(t, 1, 2)
+//
+//  Output:
+//  unit_test.go:42: Not equal:
+// 		Expected: 1
+// 		  Actual: 2
+//
+// Additional arguments to overwrite the message
+//  assert.Equal(t, 1, 2, "numbers dont match for %q", "my param")
+//
+//  Output:
+//  unit_test.go:42: numbers dont match for "my param":
+// 		Expected: 1
+// 		  Actual: 2
+//
+// See https://github.com/jgroeneveld/trial for more examples.
+//
+// Also see https://github.com/jgroeneveld/schema for easier JSON Schema testing.
 package assert
 
 import (
@@ -12,12 +36,17 @@ const (
 	msgTypes    = "   Types"
 )
 
+// Equal checks if two values are equal.
+// Reports if types are different, even though values "look" the same.
 func Equal(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected != actual {
 		comparisonError(t, "Not equal", 1, expected, actual, msgf...)
 	}
 }
 
+// MustBeEqual checks if two values are equal.
+// Reports if types are different, even though values "look" the same.
+// Will FailNow if expectation is not met.
 func MustBeEqual(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected != actual {
 		comparisonError(t, "Not equal", 1, expected, actual, msgf...)
@@ -25,6 +54,7 @@ func MustBeEqual(t testingT, expected interface{}, actual interface{}, msgf ...i
 	}
 }
 
+// NotEqual checks if two values are not equal.
 func NotEqual(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected == actual {
 		msg := titleOrMsgf("Is equal", msgf)
@@ -33,6 +63,8 @@ func NotEqual(t testingT, expected interface{}, actual interface{}, msgf ...inte
 	}
 }
 
+// MustNotBeEqual checks if two values are equal.
+// Will FailNow if expectation is not met.
 func MustNotBeEqual(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected == actual {
 		msg := titleOrMsgf("Is equal", msgf)
