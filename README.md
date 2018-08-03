@@ -17,6 +17,8 @@ For most uses, the `trial/assert` package is enough, giving us the most basic as
 **Simple equals**
 
 ```
+import "github.com/jgroeneveld/trial/assert"
+
 assert.Equal(t, 1, 2)
 
 Output:
@@ -50,6 +52,17 @@ unit_test.go:42: Not equal:
 ```
 
 See [example/example_test.go](example/example_test.go) for more.
+
+### asserter
+
+If you dont want to pass t into every call, you can bind t with `Asserter`.
+
+```
+	asserter := assert.Asserter(t)
+
+	asserter.Equal(1, 2, "numbers dont match")
+	asserter.NotEqual(1, 1, "numbers match")
+```
 
 ## trial/th Usage
 `th` can be used to write simple own assertions. This for example gives you a wrapper for [schema](https://github.com/jgroeneveld/schema).MatchJSON to have simple JSON schema assertions in your tests:

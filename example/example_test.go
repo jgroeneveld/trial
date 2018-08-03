@@ -39,6 +39,35 @@ func TestExample(t *testing.T) {
 	assert.Equal(t, "never", "thesame - but should not be called")
 }
 
+func TestExampleAsserter(t *testing.T) {
+	asserter := assert.Asserter(t)
+
+	// simple equals
+	asserter.Equal(1, 2, "numbers dont match")
+
+	asserter.NotEqual(1, 1, "numbers match")
+
+	// if the types dont match, it will be printed
+	asserter.Equal(1, "1")
+
+	asserter.True(true == false)
+
+	asserter.False(true == true)
+
+	// assert nil to have easy error handling in tests
+	err := someError()
+	asserter.Nil(err)
+
+	err = noErr()
+	asserter.Nil(err)
+
+	// Must* functions will call FailNow. (Fatal equivalent)
+	asserter.MustBeEqual("nicht", "gleich")
+
+	asserter.Equal("never", "thesame - but should not be called")
+}
+
+
 func someError() error {
 	return fmt.Errorf("Hallo Welt")
 }
