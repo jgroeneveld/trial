@@ -2,7 +2,7 @@
 
 A simple assertion library for go. Also see [schema](https://github.com/jgroeneveld/schema) for easier JSON Schema testing.
 
-[godoc](https://godoc.org/github.com/jgroeneveld/trial/assert)
+[![GoDoc](https://godoc.org/github.com/jgroeneveld/trial/assert?status.svg)](https://godoc.org/github.com/jgroeneveld/trial/assert)
 
 ## Motivation
 
