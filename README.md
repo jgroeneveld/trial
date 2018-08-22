@@ -1,8 +1,6 @@
-# Trial
+# Trial [![GoDoc](https://godoc.org/github.com/jgroeneveld/trial/assert?status.svg)](https://godoc.org/github.com/jgroeneveld/trial/assert) [![GoReport](https://goreportcard.com/badge/github.com/jgroeneveld/trial)](https://goreportcard.com/report/github.com/jgroeneveld/trial)
 
 A simple assertion library for go. Also see [schema](https://github.com/jgroeneveld/schema) for easier JSON Schema testing.
-
-[![GoDoc](https://godoc.org/github.com/jgroeneveld/trial/assert?status.svg)](https://godoc.org/github.com/jgroeneveld/trial/assert)
 
 ## Motivation
 
