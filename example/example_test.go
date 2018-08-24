@@ -67,7 +67,6 @@ func TestExampleAsserter(t *testing.T) {
 	asserter.Equal("never", "thesame - but should not be called")
 }
 
-
 func someError() error {
 	return fmt.Errorf("Hallo Welt")
 }
