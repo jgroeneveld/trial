@@ -6,6 +6,7 @@ import (
 	"runtime"
 )
 
+// Error Formats an error in a pretty way
 func Error(t testingT, skip int, msgs ...interface{}) {
 	_, file, line, ok := runtime.Caller(skip + 1)
 	if !ok {

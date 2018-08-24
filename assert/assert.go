@@ -1,4 +1,4 @@
-// trial/assert is a simple and lightweight assertion library.
+// Package assert (trial/assert) is a simple and lightweight assertion library.
 //
 // Example:
 //
@@ -74,12 +74,15 @@ func MustNotBeEqual(t testingT, expected interface{}, actual interface{}, msgf .
 	}
 }
 
+// DeepEqual test if two values are deeply equal.
 func DeepEqual(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if !reflect.DeepEqual(expected, actual) {
 		comparisonError(t, "Not deep equal", 1, expected, actual, msgf...)
 	}
 }
 
+// MustBeDeepEqual test if two values are deeply equal.
+// Will FailNow if expectation is not met.
 func MustBeDeepEqual(t testingT, expected interface{}, actual interface{}, msgf ...interface{}) {
 	if !reflect.DeepEqual(expected, actual) {
 		comparisonError(t, "Not deep equal", 1, expected, actual, msgf...)
@@ -87,12 +90,15 @@ func MustBeDeepEqual(t testingT, expected interface{}, actual interface{}, msgf 
 	}
 }
 
+// True tests if a value is true
 func True(t testingT, expression bool, msgf ...interface{}) {
 	if !expression {
 		th.Error(t, 1, titleOrMsgf("Not true", msgf))
 	}
 }
 
+// MustBeTrue tests if a value is true
+// Will FailNow if expectation is not met.
 func MustBeTrue(t testingT, expression bool, msgf ...interface{}) {
 	if !expression {
 		th.Error(t, 1, titleOrMsgf("Not true", msgf))
@@ -100,12 +106,15 @@ func MustBeTrue(t testingT, expression bool, msgf ...interface{}) {
 	}
 }
 
+// False tests if a value is False
 func False(t testingT, expression bool, msgf ...interface{}) {
 	if expression {
 		th.Error(t, 1, titleOrMsgf("Not false", msgf))
 	}
 }
 
+// MustBeFalse tests if a value is False
+// Will FailNow if expectation is not met.
 func MustBeFalse(t testingT, expression bool, msgf ...interface{}) {
 	if expression {
 		th.Error(t, 1, titleOrMsgf("Not false", msgf))
@@ -113,6 +122,7 @@ func MustBeFalse(t testingT, expression bool, msgf ...interface{}) {
 	}
 }
 
+// Nil tests if a value is Nil
 func Nil(t testingT, expression interface{}, msgf ...interface{}) {
 	if expression != nil {
 		msg := titleOrMsgf("Not nil", msgf)
@@ -121,6 +131,8 @@ func Nil(t testingT, expression interface{}, msgf ...interface{}) {
 	}
 }
 
+// MustBeNil tests if a value is Nil
+// Will FailNow if expectation is not met.
 func MustBeNil(t testingT, expression interface{}, msgf ...interface{}) {
 	if expression != nil {
 		msg := titleOrMsgf("Not nil", msgf)
@@ -130,12 +142,15 @@ func MustBeNil(t testingT, expression interface{}, msgf ...interface{}) {
 	}
 }
 
+// NotNil tests if a value is Not Nil
 func NotNil(t testingT, expression interface{}, msgf ...interface{}) {
 	if expression == nil {
 		th.Error(t, 1, titleOrMsgf("Is nil", msgf))
 	}
 }
 
+// MustNotBeNil tests if a value is Not Nil
+// Will FailNow if expectation is not met.
 func MustNotBeNil(t testingT, expression interface{}, msgf ...interface{}) {
 	if expression == nil {
 		th.Error(t, 1, titleOrMsgf("Is nil", msgf))

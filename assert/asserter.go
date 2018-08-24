@@ -6,28 +6,36 @@ import (
 	"reflect"
 )
 
-func Asserter(t testingT) *asserter {
-	return &asserter{t}
+// Asserter wraps testingT so that you do not have to pass it into each matcher
+func Asserter(t testingT) *AsserterImpl {
+	return &AsserterImpl{t}
 }
 
-type asserter struct {
+// AsserterImpl wraps testingT so that you do not have to pass it into each matcher
+type AsserterImpl struct {
 	t testingT
 }
 
-func (a *asserter) Equal(expected interface{}, actual interface{}, msgf ...interface{}) {
+// Equal checks if two values are equal.
+// Reports if types are different, even though values "look" the same.
+func (a *AsserterImpl) Equal(expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected != actual {
 		comparisonError(a.t, "Not equal", 1, expected, actual, msgf...)
 	}
 }
 
-func (a *asserter) MustBeEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
+// MustBeEqual checks if two values are equal.
+// Reports if types are different, even though values "look" the same.
+// Will FailNow if expectation is not met.
+func (a *AsserterImpl) MustBeEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected != actual {
 		comparisonError(a.t, "Not equal", 1, expected, actual, msgf...)
 		a.t.FailNow()
 	}
 }
 
-func (a *asserter) NotEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
+// NotEqual checks if two values are not equal.
+func (a *AsserterImpl) NotEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected == actual {
 		msg := titleOrMsgf("Is equal", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, actual)
@@ -35,7 +43,9 @@ func (a *asserter) NotEqual(expected interface{}, actual interface{}, msgf ...in
 	}
 }
 
-func (a *asserter) MustNotBeEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
+// MustNotBeEqual checks if two values are equal.
+// Will FailNow if expectation is not met.
+func (a *AsserterImpl) MustNotBeEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
 	if expected == actual {
 		msg := titleOrMsgf("Is equal", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, actual)
@@ -44,46 +54,56 @@ func (a *asserter) MustNotBeEqual(expected interface{}, actual interface{}, msgf
 	}
 }
 
-func (a *asserter) DeepEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
+// DeepEqual test if two values are deeply equal.
+func (a *AsserterImpl) DeepEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
 	if !reflect.DeepEqual(expected, actual) {
 		comparisonError(a.t, "Not deep equal", 1, expected, actual, msgf...)
 	}
 }
 
-func (a *asserter) MustBeDeepEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
+// MustBeDeepEqual test if two values are deeply equal.
+// Will FailNow if expectation is not met.
+func (a *AsserterImpl) MustBeDeepEqual(expected interface{}, actual interface{}, msgf ...interface{}) {
 	if !reflect.DeepEqual(expected, actual) {
 		comparisonError(a.t, "Not deep equal", 1, expected, actual, msgf...)
 		a.t.FailNow()
 	}
 }
 
-func (a *asserter) True(expression bool, msgf ...interface{}) {
+// True tests if a value is true
+func (a *AsserterImpl) True(expression bool, msgf ...interface{}) {
 	if !expression {
 		th.Error(a.t, 1, titleOrMsgf("Not true", msgf))
 	}
 }
 
-func (a *asserter) MustBeTrue(expression bool, msgf ...interface{}) {
+// MustBeTrue tests if a value is true
+// Will FailNow if expectation is not met.
+func (a *AsserterImpl) MustBeTrue(expression bool, msgf ...interface{}) {
 	if !expression {
 		th.Error(a.t, 1, titleOrMsgf("Not true", msgf))
 		a.t.FailNow()
 	}
 }
 
-func (a *asserter) False(expression bool, msgf ...interface{}) {
+// False tests if a value is False
+func (a *AsserterImpl) False(expression bool, msgf ...interface{}) {
 	if expression {
 		th.Error(a.t, 1, titleOrMsgf("Not false", msgf))
 	}
 }
 
-func (a *asserter) MustBeFalse(expression bool, msgf ...interface{}) {
+// MustBeFalse tests if a value is False
+// Will FailNow if expectation is not met.
+func (a *AsserterImpl) MustBeFalse(expression bool, msgf ...interface{}) {
 	if expression {
 		th.Error(a.t, 1, titleOrMsgf("Not false", msgf))
 		a.t.FailNow()
 	}
 }
 
-func (a *asserter) Nil(expression interface{}, msgf ...interface{}) {
+// Nil tests if a value is Nil
+func (a *AsserterImpl) Nil(expression interface{}, msgf ...interface{}) {
 	if expression != nil {
 		msg := titleOrMsgf("Not nil", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, expression)
@@ -91,7 +111,9 @@ func (a *asserter) Nil(expression interface{}, msgf ...interface{}) {
 	}
 }
 
-func (a *asserter) MustBeNil(expression interface{}, msgf ...interface{}) {
+// MustBeNil tests if a value is Nil
+// Will FailNow if expectation is not met.
+func (a *AsserterImpl) MustBeNil(expression interface{}, msgf ...interface{}) {
 	if expression != nil {
 		msg := titleOrMsgf("Not nil", msgf)
 		msg += fmt.Sprintf("\n%s: %#v", msgActual, expression)
@@ -100,13 +122,16 @@ func (a *asserter) MustBeNil(expression interface{}, msgf ...interface{}) {
 	}
 }
 
-func (a *asserter) NotNil(expression interface{}, msgf ...interface{}) {
+// NotNil tests if a value is Not Nil
+func (a *AsserterImpl) NotNil(expression interface{}, msgf ...interface{}) {
 	if expression == nil {
 		th.Error(a.t, 1, titleOrMsgf("Is nil", msgf))
 	}
 }
 
-func (a *asserter) MustNotBeNil(expression interface{}, msgf ...interface{}) {
+// MustNotBeNil tests if a value is Not Nil
+// Will FailNow if expectation is not met.
+func (a *AsserterImpl) MustNotBeNil(expression interface{}, msgf ...interface{}) {
 	if expression == nil {
 		th.Error(a.t, 1, titleOrMsgf("Is nil", msgf))
 		a.t.FailNow()
