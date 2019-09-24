@@ -53,6 +53,34 @@ unit_test.go:42: Not equal:
 
 See [example/example_test.go](example/example_test.go) for more.
 
+### Supported Assertions
+
+**Basic assertions**
+
+```
+Equal(expected, actual, msgf...)
+MustBeEqual(expected, actual, msgf...)
+NotEqual(expected, actual, msgf...)
+MustNotBeEqual(expected, actual, msgf...)
+DeepEqual(expected, actual, msgf...)
+MustBeDeepEqual(expected, actual, msgf...)
+True(expression bool, msgf...)
+MustBeTrue(expression bool, msgf...)
+False(expression bool, msgf...)
+MustBeFalse(expression bool, msgf...)
+Nil(expression, msgf...)
+MustBeNil(expression, msgf...)
+NotNil(expression, msgf...)
+MustNotBeNil(expression, msgf...)
+```
+
+**JSON Schema assertions**
+
+```
+JSONSchema(reader, matcher, msgf...)
+MustMatchJSONSchema(reader, matcher, msgf...)
+```
+
 ### asserter
 
 If you dont want to pass t into every call, you can bind t with `Asserter`.
@@ -64,7 +92,7 @@ If you dont want to pass t into every call, you can bind t with `Asserter`.
 	asserter.NotEqual(1, 1, "numbers match")
 ```
 
-## trial/th Usage
+## Writing your own assertions
 `th` can be used to write simple own assertions. This for example gives you a wrapper for [schema](https://github.com/jgroeneveld/schema).MatchJSON to have simple JSON schema assertions in your tests:
 
 ```go

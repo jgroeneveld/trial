@@ -7,6 +7,7 @@ import (
 	"io"
 )
 
+// JSONSchema uses schema to assert that json matches a given structure
 func JSONSchema(t testingT, r io.Reader, matcher schema.Matcher, msgf ...interface{}) {
 	err := schema.MatchJSON(matcher, r)
 	if err != nil {
@@ -16,6 +17,8 @@ func JSONSchema(t testingT, r io.Reader, matcher schema.Matcher, msgf ...interfa
 	}
 }
 
+// MustMatchJSONSchema uses schema to assert that json matches a given structure
+// Will FailNow if expectation is not met.
 func MustMatchJSONSchema(t testingT, r io.Reader, matcher schema.Matcher, msgf ...interface{}) {
 	err := schema.MatchJSON(matcher, r)
 	if err != nil {
