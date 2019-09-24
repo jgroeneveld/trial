@@ -1,6 +1,9 @@
 package assert
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type mockT struct {
 	errors []string
