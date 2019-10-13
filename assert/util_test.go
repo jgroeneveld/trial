@@ -7,6 +7,7 @@ import (
 
 type mockT struct {
 	errors []string
+	failedNow bool
 }
 
 func (t *mockT) Error(args ...interface{}) {
@@ -14,7 +15,7 @@ func (t *mockT) Error(args ...interface{}) {
 }
 
 func (t *mockT) FailNow() {
-
+	t.failedNow = true
 }
 
 func toString(args []interface{}) string {
