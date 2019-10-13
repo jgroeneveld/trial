@@ -7,7 +7,7 @@ import (
 )
 
 type mockT struct {
-	errors []string
+	errors    []string
 	failedNow bool
 }
 
