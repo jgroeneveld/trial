@@ -81,17 +81,6 @@ JSONSchema(reader, matcher, msgf...)
 MustMatchJSONSchema(reader, matcher, msgf...)
 ```
 
-### asserter
-
-If you dont want to pass t into every call, you can bind t with `Asserter`.
-
-```
-	asserter := assert.Asserter(t)
-
-	asserter.Equal(1, 2, "numbers dont match")
-	asserter.NotEqual(1, 1, "numbers match")
-```
-
 ## Writing your own assertions
 `th` can be used to write simple own assertions. This for example gives you a wrapper for [schema](https://github.com/jgroeneveld/schema).MatchJSON to have simple JSON schema assertions in your tests:
 
